@@ -311,7 +311,33 @@ function drawPlayer(entity) {
         flip = side < 0;
     }
 
+    // Draw the main player sprite
     drawSpriteQuad(entity, PLAYER_HALF_HEIGHT, tx, ty, flip);
+
+    // Temporarily disabled gun sprite to fix black screen
+    /*
+    // Draw gun sprite in player's hand
+    // Position the gun slightly offset from the player center
+    const gunOffsetX = Math.sin(entity.yaw) * 0.3;
+    const gunOffsetZ = Math.cos(entity.yaw) * 0.3;
+    const gunOffsetY = 0.1; // Slightly above center
+    
+    // Create a temporary entity for the gun
+    const gunEntity = new GameEntity(EntityType.PLAYER, 
+        entity.x + gunOffsetX, 
+        entity.y + gunOffsetY, 
+        entity.z + gunOffsetZ);
+
+    // Use coordinate finder for gun sprite position
+    const time = Date.now() / 2000;
+    const positions = [
+        {x: 0, y: 512}, {x: 256, y: 512}, {x: 512, y: 512}, 
+        {x: 768, y: 512}, {x: 0, y: 768}, {x: 256, y: 768}
+    ];
+    const currentPos = positions[Math.floor(time) % positions.length];
+    // Use drawSpriteQuad with correct parameters (entity, size, tx, ty, opt_flip)
+    drawSpriteQuad(gunEntity, 0.15, currentPos.x, currentPos.y, flip);
+    */
 }
 
 /**

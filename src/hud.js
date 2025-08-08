@@ -63,6 +63,7 @@ function drawHud() {
                 drawPreGameClock();
             } else {
                 drawCrosshairs();
+                firstPersonGun();
                 drawPhaseWarnings();
             }
 
@@ -90,7 +91,7 @@ function drawTitleLogo() {
 
         overlayCtx.fillStyle = COLOR_BLACK;
         overlayCtx.font = "bold 40px arial";
-        overlayCtx.fillText('#JS13K', centerX, centerY - 60);
+        overlayCtx.fillText('ZingForce', centerX, centerY - 60);
     }
 
     {
@@ -193,6 +194,121 @@ function drawCrosshairs() {
     drawShadowLine(centerX, centerY - 30, centerX, centerY + 30);
 }
 
+function firstPersonGun() {
+    // Temporarily disabled to fix black screen
+    /*
+    // Get the current player for ammo and shooting state
+    const player = ServerGameState.getCurrentPlayer(gameState);
+    if (!player) {
+        return;
+    }
+
+    // Gun position (bottom-right corner)
+    const gunWidth = 120;
+    const gunHeight = 80;
+    const gunX = width - gunWidth - 20;
+    const gunY = height - gunHeight - 20;
+
+    // Recoil animation when shooting
+    let recoilOffset = 0;
+    if (player.cooldown > 0) {
+        // Add recoil effect when gun is on cooldown (recently fired)
+        recoilOffset = Math.sin((16 - player.cooldown) * 0.5) * 10;
+    }
+
+    // Draw gun shadow first
+    overlayCtx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    overlayCtx.fillRect(gunX + 5, gunY + 5, gunWidth, gunHeight);
+
+    // Create a temporary canvas to draw the gun sprite
+    const gunCanvas = document.createElement('canvas');
+    gunCanvas.width = gunWidth;
+    gunCanvas.height = gunHeight;
+    const gunCtx = gunCanvas.getContext('2d');
+
+    // Load the texture image and draw the gun sprite
+    const textureImg = new Image();
+    textureImg.onload = function() {
+        // Clear the gun canvas
+        gunCtx.clearRect(0, 0, gunWidth, gunHeight);
+        
+        // Draw the gun sprite from textures.png
+        // Updated for 2048x2048 texture sheet with 256x256 gun sprite
+        // Try different positions to find the gun sprite
+        const time = Date.now() / 2000; // Change position every 2 seconds
+        const positions = [
+            {x: 0, y: 512},    // First column, second row
+            {x: 256, y: 512},  // Second column, second row  
+            {x: 512, y: 512},  // Third column, second row
+            {x: 768, y: 512},  // Fourth column, second row
+            {x: 0, y: 768},    // First column, third row
+            {x: 256, y: 768},  // Second column, third row
+        ];
+        const currentPos = positions[Math.floor(time) % positions.length];
+        const spriteX = currentPos.x;
+        const spriteY = currentPos.y;
+        const spriteSize = 256; // Gun sprite is 256x256 pixels
+        
+        console.log('Loading gun sprite at coordinates:', spriteX, spriteY, 'size:', spriteSize);
+        console.log('Texture dimensions: 2048x2048');
+        
+        // Scale the sprite to fit the gun display area
+        const scale = Math.min(gunWidth / spriteSize, gunHeight / spriteSize) * 2;
+        const scaledWidth = spriteSize * scale;
+        const scaledHeight = spriteSize * scale;
+        
+        console.log('Scaled dimensions:', scaledWidth, 'x', scaledHeight);
+        
+        // Center the gun sprite
+        const centerX = (gunWidth - scaledWidth) / 2;
+        const centerY = (gunHeight - scaledHeight) / 2;
+        
+        // Draw the gun sprite
+        gunCtx.drawImage(
+            textureImg,
+            spriteX, spriteY, spriteSize, spriteSize,
+            centerX + recoilOffset, centerY, scaledWidth, scaledHeight
+        );
+        
+        // Draw the gun canvas onto the main overlay
+        overlayCtx.drawImage(gunCanvas, gunX, gunY);
+        
+        // Draw ammo indicator on gun
+        overlayCtx.fillStyle = '#FFFFFF';
+        overlayCtx.font = '12px sans-serif';
+        overlayCtx.textAlign = 'center';
+        overlayCtx.fillText(player.ammo.toString(), gunX + gunWidth * 0.5 + recoilOffset, gunY + gunHeight * 0.8);
+        
+        // Draw sprite finder info
+        overlayCtx.fillStyle = '#FFFF00';
+        overlayCtx.font = '10px sans-serif';
+        overlayCtx.textAlign = 'left';
+        overlayCtx.fillText(`Sprite: ${spriteX},${spriteY} Size: ${spriteSize}x${spriteSize}`, 10, 20);
+        overlayCtx.fillText(`Scale: ${scale.toFixed(2)} Scaled: ${scaledWidth.toFixed(0)}x${scaledHeight.toFixed(0)}`, 10, 35);
+    };
+    textureImg.onerror = function() {
+        console.error('Failed to load gun texture');
+        // Fallback: draw a simple rectangle if texture fails
+        overlayCtx.fillStyle = '#2a2a2a';
+        overlayCtx.fillRect(gunX + recoilOffset, gunY, gunWidth * 0.8, gunHeight * 0.6);
+    };
+    textureImg.src = 'textures.png';
+
+    // Draw muzzle flash when shooting
+    if (player.cooldown > 12) {
+        overlayCtx.fillStyle = '#FFFF00';
+        overlayCtx.beginPath();
+        overlayCtx.arc(gunX + gunWidth + recoilOffset, gunY + gunHeight * 0.3, 15, 0, 2 * Math.PI);
+        overlayCtx.fill();
+        
+        overlayCtx.fillStyle = '#FFA500';
+        overlayCtx.beginPath();
+        overlayCtx.arc(gunX + gunWidth + recoilOffset, gunY + gunHeight * 0.3, 8, 0, 2 * Math.PI);
+        overlayCtx.fill();
+    }
+    */
+}
+
 function drawPhaseWarnings() {
     let phaseTime = ((gameState.currentTime) | 0) % FULL_PHASE_DURATION;
     let warningY = (0.25 * height) | 0;
@@ -289,6 +405,8 @@ function drawPreGameClock() {
     drawShadowText('Starts in:', centerX, centerY - 60);
 
     setFontSize(60);
+    console.log(-gameState.currentTime);
+    
     drawShadowText((-gameState.currentTime) | 0, centerX, centerY);
 }
 

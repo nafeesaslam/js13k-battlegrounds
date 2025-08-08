@@ -185,3 +185,54 @@ BufferSet.prototype.render = function (gl, programInfo, texture) {
         gl.drawElements(TRIANGLES, vertexCount, type, offset);
     }
 };
+
+// Joystick/iframe movement bridge for Angular parent
+window.addEventListener('message', (event) => {
+    if (event.data.action === 'moveLeftDown') setKey(65, true);
+    if (event.data.action === 'moveLeftUp') setKey(65, false);
+  
+    if (event.data.action === 'moveRightDown') setKey(68, true);
+    if (event.data.action === 'moveRightUp') setKey(68, false);
+  
+    if (event.data.action === 'moveUpDown') setKey(87, true);
+    if (event.data.action === 'moveUpUp') setKey(87, false);
+  
+    if (event.data.action === 'moveDownDown') setKey(83, true);
+    if (event.data.action === 'moveDownUp') setKey(83, false);
+
+    if (event.data.action === 'jumpDown') setKey(32, true);   // 32 = Space (commonly used for fire)
+    if (event.data.action === 'jumpUp') setKey(32, false);
+
+    // if (event.data.action === 'fireStart') setKey(70, true);   // 32 = Space (commonly used for fire)
+    // if (event.data.action === 'fireStop') setKey(70, false);
+    // if (event.data.action === 'fireStart') {
+    //     const evt = new MouseEvent('mousedown', { button: 0, bubbles: true });
+    //     document.dispatchEvent(evt);   // 70 = 'F' (or use your game's fire key)
+    //     console.log(evt);
+        
+    // }
+    // if (event.data.action === 'fireStop') {
+    //     const evt = new MouseEvent('mouseup', { button: 0, bubbles: true });
+    //     document.dispatchEvent(evt);
+    // }
+
+    if (event.data.action === 'fireStart') {
+        const evt = new KeyboardEvent('keydown', { key: 'f', keyCode: 70, which: 70, bubbles: true });
+        window.dispatchEvent(evt);
+    }
+    if (event.data.action === 'fireStop') {
+        const evt = new KeyboardEvent('keyup', { key: 'f', keyCode: 70, which: 70, bubbles: true });
+        window.dispatchEvent(evt);
+    }
+
+    if (event.data.action === 'pointerLockChange') {
+        const evt = new PointerEvent('pointerlockchange', { bubbles: true });
+        window.dispatchEvent(evt);
+
+        // if (document.pointerLockElement === canvas) {
+        //     document.addEventListener('mousemove', onMouseMove, false);
+        //   } else {
+        //     document.removeEventListener('mousemove', onMouseMove, false);
+        //   }
+    }
+});

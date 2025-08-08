@@ -81,7 +81,7 @@ function scheduleCompile() {
     watchTimerId = setTimeout(() => {
         console.log('Building...');
         compile().then(() => createZip()).then(() => console.log('done'));
-    }, 100);
+    }, 500); // Increased delay from 100ms to 500ms to prevent too frequent rebuilds
 }
 
 function watch() {

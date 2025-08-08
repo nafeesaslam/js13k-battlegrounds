@@ -14,6 +14,7 @@ const KEY_Q = 81;
 const KEY_S = 83;
 const KEY_W = 87;
 const KEY_Z = 90;
+const KEY_F = 70;
 
 /**
  * Creates a new key instance.
@@ -36,6 +37,7 @@ for (let i = 0; i < KEY_COUNT; i++) {
 document.addEventListener(
     'keydown',
     function (e) {
+        console.log('keydown', e.keyCode);
         setKey(e.keyCode, true);
     });
 

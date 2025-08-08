@@ -1,7 +1,7 @@
 {
-  "name": "js13k-battlegrounds",
+  "name": "zingforce-battlegrounds",
   "version": "0.0.1",
-  "description": "js13k battle royale",
+  "description": "zingforce battle royale",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "node build.js"
   },
   "keywords": [
-    "js13kgames",
+    "zingforcegames",
     "server"
   ],
   "engines": {

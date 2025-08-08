@@ -1,4 +1,9 @@
 
+
+// ...
+
+
+
 const player = new GameEntity(EntityType.PLAYER, 0, 200, 0, 0, 0, 0);
 player.name = getPlayerName();
 player.pitch = 0.1;
@@ -64,6 +69,11 @@ overlayCanvas.addEventListener('click', function (e) {
     }
 });
 
+socket.on('update', (newGameState) => {
+//   console.log('Received game state:', newGameState);
+  gameState = newGameState;
+});
+
 function getPlayerName() {
     let name = localStorage.getItem('n');
     if (!name) {
@@ -79,6 +89,8 @@ function setPlayerName(name) {
 
 function shoot() {
     createClientEvent(EntityType.SHOOT);
+    console.log('shoot');
+
     playGunfire(0);
 
     // Recoil
@@ -122,6 +134,12 @@ overlayCanvas.addEventListener('mousemove', function (e) {
 
 // Hook pointer lock state change events for different browsers
 document.addEventListener('pointerlockchange', handleLockChangeEvent);
+
+window.addEventListener('keydown', function (e) {
+    if (e.key === 'f' || e.key === 'F') {
+        shoot();
+    }
+});
 
 function initGame() {
     // Create the map from the seed

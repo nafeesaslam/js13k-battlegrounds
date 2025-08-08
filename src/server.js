@@ -3,7 +3,7 @@
 /**
  * The time in seconds before the game actually starts.
  */
-const PREGAME_TIME = 30;
+const PREGAME_TIME = 5;
 
 const server = {
     /** @type {number} */
